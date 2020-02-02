@@ -22,6 +22,8 @@ class Api {
       http.Response isGranded = await http.get('https://tms-dev.rhinocodes.com/api/dispatchers/is-granted',
           headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
 
+      print(isGranded.toString());
+
       String url = 'https://tms-dev.rhinocodes.com/api/dispatchers/me';
 
       http.Response response = await http.get(url,

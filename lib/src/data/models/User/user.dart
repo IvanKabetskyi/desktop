@@ -1,4 +1,3 @@
-import 'package:example_flutter/src/data/models/User/user_me.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';

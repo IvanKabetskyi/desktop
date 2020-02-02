@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 dynamic http = new Api();
 
 abstract class AppRepository {
-  @override
   Future<AppState> login(String email, String password, BuildContext context);
 }
 

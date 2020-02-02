@@ -11,12 +11,12 @@ class MenuItem extends StatefulWidget {
     this.icon,
   }) : super(key: key);
 
-  String title;
-  String link;
-  int index;
-  int selectIndex;
-  Function press;
-  IconData icon;
+  final String title;
+  final String link;
+  final int index;
+  final int selectIndex;
+  final Function press;
+  final IconData icon;
   @override
   _MenuItemState createState() => _MenuItemState();
 

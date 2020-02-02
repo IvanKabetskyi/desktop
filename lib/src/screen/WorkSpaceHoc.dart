@@ -1,5 +1,4 @@
 import 'package:example_flutter/src/components/menu.dart';
-import 'package:example_flutter/src/components/menuItem.dart';
 import 'package:flutter/material.dart';
 
 class WorkSpaceHoc extends StatefulWidget {
