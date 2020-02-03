@@ -36,12 +36,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<AppState> login(String email, String password,
-      BuildContext context) async {
+  Future<AppState> login(
+      String email, String password, BuildContext context) async {
     try {
       Map<String, dynamic> tokens = await getToken(email, password);
-
-      // Navigator.pushNamed(context, '/home');
 
       UserMe userMe = await getMe(tokens['access_token']);
 
@@ -50,8 +48,6 @@ class AppRepositoryImpl implements AppRepository {
           accessToken: tokens['access_token'],
           refreshToken: tokens['refresh_token']);
     } catch (e) {
-
-      await Navigator.pushNamed(context, '/');
       throw e.toString();
     }
   }
