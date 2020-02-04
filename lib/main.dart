@@ -24,18 +24,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<AppBloc>(
-            create: (BuildContext context) =>
-                AppBloc(repository: new AppRepositoryImpl()),
-          )
-        ],
-        child: MaterialApp(
+      providers: [
+        BlocProvider<AppBloc>(
+          create: (BuildContext context) =>
+              AppBloc(repository: new AppRepositoryImpl()),
+        )
+      ],
+      child: MaterialApp(
         routes: {
           '/': (context) => WorkSpaceHoc(),
           '/login': (context) => LoginPage(),
         },
-        debugShowCheckedModeBanner: false, 
+        debugShowCheckedModeBanner: false,
         initialRoute: '/login',
       ),
     );

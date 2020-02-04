@@ -2,19 +2,19 @@ import 'package:example_flutter/src/components/menu.dart';
 import 'package:flutter/material.dart';
 
 class WorkSpaceHoc extends StatefulWidget {
-  WorkSpaceHoc({Key key}) : super(key : key);
+  WorkSpaceHoc({Key key}) : super(key: key);
 
   @override
   _WorkSpaceState createState() => _WorkSpaceState();
 }
 
-class _WorkSpaceState extends State<WorkSpaceHoc> with TickerProviderStateMixin {
+class _WorkSpaceState extends State<WorkSpaceHoc>
+    with TickerProviderStateMixin {
   double widthTextMenu;
   double widthMenu;
 
   AnimationController _hover;
   Animation<Color> animationHover;
-
 
   @override
   void initState() {
@@ -36,6 +36,7 @@ class _WorkSpaceState extends State<WorkSpaceHoc> with TickerProviderStateMixin 
     widthTextMenu = 112.0;
     widthMenu = 240.0;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,22 +49,24 @@ class _WorkSpaceState extends State<WorkSpaceHoc> with TickerProviderStateMixin 
                 Container(
                   height: 60,
                   color: Color(0xFF40c4ff),
-                  child: Row(children: <Widget>[
-                    Expanded(
-                      child: Row(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Row(
                         children: <Widget>[
                           InkWell(
                             onHover: (event) {
-                              if(event){
+                              if (event) {
                                 _hover.forward();
-                              }else {
+                              } else {
                                 _hover.reverse();
                               }
                             },
                             onTap: () {
                               setState(() {
                                 widthMenu = widthMenu == 64.0 ? 240.0 : 64.0;
-                                widthTextMenu = widthTextMenu > 0.0 ? 0.0 : 112.0;
+                                widthTextMenu =
+                                    widthTextMenu > 0.0 ? 0.0 : 112.0;
                               });
                             },
                             child: Container(
@@ -80,19 +83,14 @@ class _WorkSpaceState extends State<WorkSpaceHoc> with TickerProviderStateMixin 
                               ),
                             ),
                           )
-                    ],))
-                  ],),
+                        ],
+                      ))
+                    ],
+                  ),
                 ),
                 Expanded(
-                  child: MaterialApp(
-                    routes: {
-                      '/drivers': (context) => Scaffold(body: Text('Drivers'),)
-                    },
-                    initialRoute: '/drivers',
-                    debugShowCheckedModeBanner: false, 
-                  ),
+                  child: Container(),
                 )
-                
               ],
             ),
           ),

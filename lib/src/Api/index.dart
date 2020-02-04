@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class Api {
-  
   dynamic getToken(String email, String password) async {
     final response = await http.post(
         'https://tms-dev.rhinocodes.com/api/public/oauth/v2/token',
@@ -18,8 +17,9 @@ class Api {
   }
 
   dynamic getMe(String accessToken) async {
-    try{
-      http.Response isGranded = await http.get('https://tms-dev.rhinocodes.com/api/dispatchers/is-granted',
+    try {
+      http.Response isGranded = await http.get(
+          'https://tms-dev.rhinocodes.com/api/dispatchers/is-granted',
           headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
 
       print(isGranded.toString());
@@ -29,7 +29,7 @@ class Api {
       http.Response response = await http.get(url,
           headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
       return response;
-    }catch(error){
+    } catch (error) {
       print(error.toString());
     }
   }
