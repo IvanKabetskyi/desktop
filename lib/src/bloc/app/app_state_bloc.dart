@@ -29,7 +29,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
         yield AppLoadedState(appState: appState);
         yield appState;
-        print(json.encode(appState));
         await Navigator.of(event.context).pushNamed('/');
       } catch (e) {
         yield AppErrorState(message: e.toString());

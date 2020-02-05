@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:example_flutter/src/data/models/User/settings.dart';
 import 'package:example_flutter/src/data/models/User/user.dart';
+import 'package:example_flutter/src/lib/conver_to_camel_case.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:recase/recase.dart';
 
 part 'user_me.g.dart';
 
@@ -59,9 +63,8 @@ class UserMe {
       this.isHidden,
       this.settings});
 
-
   factory UserMe.fromJson(Map<String, dynamic> json) =>
-      _$UserMeFromJson(json);
+      _$UserMeFromJson(converKeyToCamelCase(json));
 
   Map<String, dynamic> toJson() => _$UserMeToJson(this);
 }

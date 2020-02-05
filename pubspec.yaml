@@ -17,14 +17,16 @@ dependencies:
   cupertino_icons: ^0.1.0
   provider: ^4.0.2
   flutter_bloc: ^3.1.0
+  hive: ^1.3.0
+  hive_flutter: ^0.3.0+1
+  http: ^0.12.0+4
+  recase: ^3.0.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
-  http: ^0.12.0+4
   hydrated_bloc: ^3.0.0
   equatable: ^1.0.2
   json_annotation: ^3.0.1

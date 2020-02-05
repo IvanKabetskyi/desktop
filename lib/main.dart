@@ -1,7 +1,8 @@
+import 'dart:io';
+
+import 'package:example_flutter/src/Router/route_generator.dart';
 import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
 import 'package:example_flutter/src/data/repositories/user_repositore.dart';
-import 'package:example_flutter/src/screen/Login.dart';
-import 'package:example_flutter/src/screen/WorkSpaceHoc.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
 // import 'package:flutter/gestures.dart';
@@ -11,13 +12,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
 //color #3fc4ff
 
 void main() async {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-
+  Directory current = Directory.current;
+  Hive.init(current.toString());
   runApp(new MyApp());
+
+  await Hive.openBox('myBox');
+  var box = Hive.box('myBox');
+
+  // box.put('name', 'Ivan');
+
+  var name = box.get('name');
+
+  print(name.toString());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,10 +43,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        routes: {
-          '/': (context) => WorkSpaceHoc(),
-          '/login': (context) => LoginPage(),
-        },
+        onGenerateRoute: RouteGenerator.generateRoute,
         debugShowCheckedModeBanner: false,
         initialRoute: '/login',
       ),

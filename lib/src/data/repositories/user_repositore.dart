@@ -39,11 +39,8 @@ class AppRepositoryImpl implements AppRepository {
   Future<AppState> login(
       String email, String password, BuildContext context) async {
     try {
-      print('Login');
       Map<String, dynamic> tokens = await getToken(email, password);
-
       UserMe userMe = await getMe(tokens['access_token']);
-
       return new AppState(
           userMe: userMe,
           accessToken: tokens['access_token'],

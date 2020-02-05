@@ -6,8 +6,6 @@ import 'package:example_flutter/src/components/InputContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:example_flutter/src/data/repositories/user_repositore.dart';
-
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
@@ -126,9 +124,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login() async {
-    print('Login page');
-    AppRepositoryImpl repository = new AppRepositoryImpl();
-    await repository.login(email.text, password.text, context);
     appBloc.add(new FetchLogin(
         email: email.text, password: password.text, context: context));
   }
