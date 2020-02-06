@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:example_flutter/src/bloc/drivers/drivers_state.dart';
 import 'package:example_flutter/src/bloc/drivers/drivers_state_event.dart';
@@ -26,10 +25,7 @@ class DriversBloc extends Bloc<DriversEvent, DriversState> {
         DriversState driversState = await repository.getDrivers(
             event.page, event.perPage, event.accessToken);
 
-        print('before loaded ${json.encode(driversState)}');
-
         yield DriversLoadedState(driversState: driversState);
-        print(json.encode(driversState));
         yield driversState;
       } catch (e) {
         yield DriversErrorState(message: e.toString());

@@ -19,6 +19,7 @@ import 'package:hive/hive.dart';
 void main() async {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   Directory current = Directory.current;
+  print(current.toString());
   Hive.init(current.toString());
   runApp(new MyApp());
 
