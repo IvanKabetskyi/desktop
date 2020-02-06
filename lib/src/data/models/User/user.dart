@@ -1,3 +1,4 @@
+import 'package:example_flutter/src/lib/conver_to_camel_case.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
@@ -40,7 +41,7 @@ class User {
       this.driver});
 
   factory User.fromJson(Map<String, dynamic> json) =>
-      _$UserFromJson(json);
+      _$UserFromJson(converKeyToCamelCase(json));
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }

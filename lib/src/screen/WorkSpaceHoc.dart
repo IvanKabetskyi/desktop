@@ -1,5 +1,9 @@
+import 'package:example_flutter/src/Router/route_generator_work_space.dart';
+import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
 import 'package:example_flutter/src/components/menu.dart';
+import 'package:example_flutter/src/data/repositories/drivers_repositore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WorkSpaceHoc extends StatefulWidget {
   WorkSpaceHoc({Key key}) : super(key: key);
@@ -12,7 +16,6 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
     with TickerProviderStateMixin {
   double widthTextMenu;
   double widthMenu;
-
   AnimationController _hover;
   Animation<Color> animationHover;
 
@@ -89,7 +92,19 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
                   ),
                 ),
                 Expanded(
-                  child: Container(),
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider<DriversBloc>(
+                        create: (BuildContext context) => DriversBloc(
+                            repository: new DriversRepositoryImpl()),
+                      ),
+                    ],
+                    child: MaterialApp(
+                      onGenerateRoute: RouteGeneratorWorkSpace.generateRoute,
+                      debugShowCheckedModeBanner: false,
+                      initialRoute: '/drivers',
+                    ),
+                  ),
                 )
               ],
             ),

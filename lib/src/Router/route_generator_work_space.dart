@@ -1,19 +1,13 @@
 import 'package:example_flutter/src/screen/Drivers.dart';
-import 'package:example_flutter/src/screen/Login.dart';
-import 'package:example_flutter/src/screen/WorkSpaceHoc.dart';
 import 'package:flutter/material.dart';
 
-class RouteGenerator {
+class RouteGeneratorWorkSpace {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
     print(args.toString());
 
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => WorkSpaceHoc());
-      case '/login':
-        return MaterialPageRoute(builder: (_) => LoginPage());
       case '/drivers':
         return MaterialPageRoute(builder: (_) => DriversPage());
       default:

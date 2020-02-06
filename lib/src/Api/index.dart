@@ -21,6 +21,8 @@ class Api {
           'https://tms-dev.rhinocodes.com/api/dispatchers/is-granted',
           headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
 
+      print(isGranded.body.toString());
+
       String url = 'https://tms-dev.rhinocodes.com/api/dispatchers/me';
 
       http.Response response = await http.get(url,
@@ -28,8 +30,17 @@ class Api {
       return response;
     } catch (error) {
       print(error.toString());
+      throw error;
     }
   }
 
-  /// me request url: https://tms-dev.rhinocodes.com/api/drivers/me
+  dynamic getDrivers(int page, int perPage, String accessToken) async {
+    final response = await http.get(
+        'https://tms-dev.rhinocodes.com/api/drivers?page=$page&per-page=$perPage',
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
+    if (response.statusCode == 200) {
+      return response.body;
+    }
+    throw Exception();
+  }
 }

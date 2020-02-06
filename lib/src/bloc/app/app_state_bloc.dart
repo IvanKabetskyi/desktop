@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:example_flutter/src/bloc/app/app_state.dart';
 import 'package:example_flutter/src/bloc/app/app_state_event.dart';
@@ -29,7 +28,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
         yield AppLoadedState(appState: appState);
         yield appState;
-        await Navigator.of(event.context).pushNamed('/');
+        Navigator.of(event.context).pushNamed('/');
       } catch (e) {
         yield AppErrorState(message: e.toString());
       }

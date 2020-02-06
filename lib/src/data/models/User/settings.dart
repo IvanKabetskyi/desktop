@@ -1,3 +1,4 @@
+import 'package:example_flutter/src/lib/conver_to_camel_case.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'settings.g.dart';
@@ -14,7 +15,7 @@ class Settings {
       {this.id, this.dateFormat, this.timezone, this.email, this.dispatcher});
 
   factory Settings.fromJson(Map<String, dynamic> json) =>
-      _$SettingsFromJson(json);
+      _$SettingsFromJson(converKeyToCamelCase(json));
 
   Map<String, dynamic> toJson() => _$SettingsToJson(this);
 }
