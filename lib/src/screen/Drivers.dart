@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
+import 'package:example_flutter/src/bloc/drivers/drivers_state.dart';
 import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
 import 'package:example_flutter/src/bloc/drivers/drivers_state_event.dart';
+import 'package:example_flutter/src/data/models/Drivers/drivers_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,13 +43,34 @@ class _DriversState extends State<DriversPage> {
               EdgeInsets.only(top: 80.0, left: 35.0, right: 35.0, bottom: 20.0),
           children: <Widget>[
             HeaderDrivers(),
-            ItemDrivers(
-              type: 'test',
-              email: 'test',
-              mobile: 'test',
-              truck: 'test',
-              app: 'test',
-              home: 'test',
+            BlocBuilder<DriversBloc, DriversState>(
+              builder: (context, state) {
+                if (state is DriversInitialState) {
+                  return Text('company, email, password Loading........');
+                } else if (state is DriversLoadingState) {
+                  return Text('AppLoadingState Loading........');
+                } else if (state is DriversErrorState) {
+                  return Text(state.message);
+                }
+
+                return Column(
+                  children: state.drivers
+                      .map((driver) => ItemDrivers(
+                          type: '${driver.isOwner ? "(o/d)" : "(dr)"}',
+                          mobile: driver.mobilePhone,
+                          email: driver.email,
+                          app: driver.mobileApp,
+                          home:
+                              '${driver.addressLine}\n${driver.city}, ${driver.state} ${driver.zip}',
+                          truck: driver.truck != null
+                              ? '${driver.truck.number}\n${driver.owner.firstName} ${driver.owner.lastName}'
+                              : driver.owner != null
+                                  ? '${driver.owner.firstName} ${driver.owner.lastName}'
+                                  : '',
+                          name: '${driver.firstName} ${driver.lastName}'))
+                      .toList(),
+                );
+              },
             ),
           ],
         ),
@@ -188,15 +213,17 @@ class ItemDrivers extends StatelessWidget {
       @required this.email,
       @required this.app,
       @required this.home,
-      @required this.truck})
+      @required this.truck,
+      @required this.name})
       : super(key: key);
 
   final String type;
   final String mobile;
   final String email;
-  final String app;
+  final bool app;
   final String home;
   final String truck;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -218,10 +245,10 @@ class ItemDrivers extends StatelessWidget {
                   bottom: BorderSide(color: Color(0xFFeceff1), width: 1),
                 ),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
               child: Center(
                 child: Text(
-                  'TYPE',
+                  type,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
@@ -237,13 +264,16 @@ class ItemDrivers extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'NAME',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  name,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 251,
@@ -254,13 +284,16 @@ class ItemDrivers extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'MOBILE PHONE',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  mobile,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 208,
@@ -271,13 +304,16 @@ class ItemDrivers extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'EMAIL',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  email,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 347,
@@ -288,13 +324,16 @@ class ItemDrivers extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'APP',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  app.toString(),
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 74,
@@ -305,13 +344,16 @@ class ItemDrivers extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'HOME ADDRESS',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  home,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 331,
@@ -322,13 +364,16 @@ class ItemDrivers extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'ON TRUCK AND OWNER',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  truck,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 250,
@@ -343,13 +388,16 @@ class ItemDrivers extends StatelessWidget {
                   bottom: BorderSide(color: Color(0xFFeceff1), width: 1),
                 ),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-              child: Text(
-                'ACTIONS',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF353a45)),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'ACTIONS',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF353a45)),
+                ),
               ),
             ),
             flex: 151,
