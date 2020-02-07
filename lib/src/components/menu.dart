@@ -29,6 +29,11 @@ class _MenuState extends State<Menu> {
         'link': '/drivers',
       },
       {
+        'icon': Icons.directions_car,
+        'title': 'test',
+        'link': '/test',
+      },
+      {
         'icon': Icons.power_settings_new,
         'title': 'LOG OUT',
         'link': '/login',

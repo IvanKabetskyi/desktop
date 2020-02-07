@@ -73,11 +73,10 @@ class _DriversState extends State<DriversPage> {
     String email = driver.email;
     String home =
         '${driver.addressLine}\n${driver.city}, ${driver.state} ${driver.zip}';
-    String truck = driver.truck != null
-        ? '${driver.truck.number}\n${driver.owner.firstName} ${driver.owner.lastName}'
-        : (driver.owner != null
-            ? '${driver.owner.firstName} ${driver.owner.lastName}'
-            : '');
+    String truck = driver.truck != null ? '${driver.truck.number}' : null;
+    String owner = driver.owner != null
+        ? '${driver.owner.firstName} ${driver.owner.lastName}'
+        : null;
     String name = '${driver.firstName} ${driver.lastName}';
     IconData appIcon = driver.mobileApp
         ? (driver.deviceType == 'android'
@@ -91,6 +90,7 @@ class _DriversState extends State<DriversPage> {
         app: appIcon,
         home: home,
         truck: truck,
+        owner: owner,
         name: name);
   }
 

@@ -10,6 +10,8 @@ class RouteGeneratorWorkSpace {
     switch (settings.name) {
       case '/drivers':
         return MaterialPageRoute(builder: (_) => DriversPage());
+      case '/test':
+        return MaterialPageRoute(builder: (_) => Text('test'));
       default:
         return MaterialPageRoute(builder: (_) => Text('Error'));
     }

@@ -1,6 +1,7 @@
+import 'package:example_flutter/src/components/action_button.dart';
 import 'package:flutter/material.dart';
 
-class ItemDrivers extends StatelessWidget {
+class ItemDrivers extends StatefulWidget {
   ItemDrivers(
       {Key key,
       @required this.type,
@@ -8,7 +9,8 @@ class ItemDrivers extends StatelessWidget {
       @required this.email,
       @required this.app,
       @required this.home,
-      @required this.truck,
+      this.truck,
+      this.owner,
       @required this.name})
       : super(key: key);
 
@@ -19,6 +21,23 @@ class ItemDrivers extends StatelessWidget {
   final String home;
   final String truck;
   final String name;
+  final String owner;
+
+  _ItemDriversState createState() => _ItemDriversState();
+}
+
+class _ItemDriversState extends State<ItemDrivers> {
+  bool isNameHover;
+  bool isTruckHover;
+  bool isOwnerHover;
+
+  @override
+  void initState() {
+    super.initState();
+    isNameHover = false;
+    isTruckHover = false;
+    isOwnerHover = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +62,7 @@ class ItemDrivers extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
               child: Center(
                 child: Text(
-                  type,
+                  widget.type,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w700,
@@ -62,12 +81,28 @@ class ItemDrivers extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  name,
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF353a45)),
+                child: InkWell(
+                  onHover: (value) {
+                    setState(() {
+                      isNameHover = value;
+                    });
+                  },
+                  onTap: () {
+                    print('TAP');
+                  },
+                  child: Text(
+                    widget.name,
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF353a45),
+                        decoration: isNameHover
+                            ? TextDecoration.none
+                            : TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dashed,
+                        decorationColor: Color(0xFF353a45),
+                        decorationThickness: 2.0),
+                  ),
                 ),
               ),
             ),
@@ -83,7 +118,7 @@ class ItemDrivers extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  mobile,
+                  widget.mobile,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w400,
@@ -103,7 +138,7 @@ class ItemDrivers extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  email,
+                  widget.email,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w400,
@@ -123,7 +158,7 @@ class ItemDrivers extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Icon(
-                  app,
+                  widget.app,
                   color: Color(0xFF84939a),
                   size: 14.0,
                 ),
@@ -141,7 +176,7 @@ class ItemDrivers extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  home,
+                  widget.home,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w400,
@@ -158,15 +193,61 @@ class ItemDrivers extends StatelessWidget {
                 border: Border.all(color: Color(0xFFeceff1), width: 1),
               ),
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  truck,
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF353a45)),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  widget.truck != null
+                      ? InkWell(
+                          onHover: (value) {
+                            setState(() {
+                              isTruckHover = value;
+                            });
+                          },
+                          onTap: () {
+                            print('TAP');
+                          },
+                          child: Text(
+                            widget.truck,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF353a45),
+                                decoration: isTruckHover
+                                    ? TextDecoration.none
+                                    : TextDecoration.underline,
+                                decorationStyle: TextDecorationStyle.dashed,
+                                decorationColor: Color(0xFF353a45),
+                                decorationThickness: 2.0),
+                          ),
+                        )
+                      : Container(),
+                  widget.owner != null
+                      ? InkWell(
+                          onHover: (value) {
+                            setState(() {
+                              isOwnerHover = value;
+                            });
+                          },
+                          onTap: () {
+                            print('TAP');
+                          },
+                          child: Text(
+                            widget.owner,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF353a45),
+                                decoration: isOwnerHover
+                                    ? TextDecoration.none
+                                    : TextDecoration.underline,
+                                decorationStyle: TextDecorationStyle.dashed,
+                                decorationColor: Color(0xFF353a45),
+                                decorationThickness: 2.0),
+                          ),
+                        )
+                      : Container(),
+                ],
               ),
             ),
             flex: 250,
@@ -182,15 +263,23 @@ class ItemDrivers extends StatelessWidget {
                 ),
               ),
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'ACTIONS',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF353a45)),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                      width: 32.0,
+                      height: 32.0,
+                      child: ActionButton(icon: Icons.visibility)),
+                  SizedBox(
+                      width: 32.0,
+                      height: 32.0,
+                      child: ActionButton(icon: Icons.create)),
+                  SizedBox(
+                      width: 32.0,
+                      height: 32.0,
+                      child: ActionButton(icon: Icons.delete_forever)),
+                ],
               ),
             ),
             flex: 151,

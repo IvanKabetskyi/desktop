@@ -91,7 +91,7 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
                     ],
                   ),
                 ),
-                Expanded(
+                Flexible(
                   child: MultiBlocProvider(
                     providers: [
                       BlocProvider<DriversBloc>(
