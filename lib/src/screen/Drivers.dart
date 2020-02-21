@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
-import 'package:example_flutter/src/bloc/drivers/drivers_state.dart';
 import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
 import 'package:example_flutter/src/bloc/drivers/drivers_state_event.dart';
 import 'package:example_flutter/src/components/Drivers/drivers_header.dart';
@@ -46,19 +47,15 @@ class _DriversState extends State<DriversPage> {
             HeaderDrivers(),
             BlocBuilder<DriversBloc, DriversState>(
               builder: (context, state) {
-                if (state is DriversInitialState) {
-                  return Text('company, email, password Loading........');
-                } else if (state is DriversLoadingState) {
-                  return Text('AppLoadingState Loading........');
-                } else if (state is DriversErrorState) {
-                  return Text(state.message);
+                if (state is DriversState && state.drivers != null) {
+                  return Column(
+                    children: state.drivers
+                        .map((driver) => createDriverItem(driver))
+                        .toList(),
+                  );
                 }
 
-                return Column(
-                  children: state.drivers
-                      .map((driver) => createDriverItem(driver))
-                      .toList(),
-                );
+                return SizedBox();
               },
             ),
           ],
