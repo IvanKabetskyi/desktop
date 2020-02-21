@@ -7,11 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class WorkSpaceHoc extends StatefulWidget {
-  WorkSpaceHoc({Key key, @required this.child, @required this.index})
+  WorkSpaceHoc(
+      {Key key,
+      @required this.child,
+      @required this.index,
+      @required this.toggle})
       : super(key: key);
 
   final Widget child;
   final int index;
+  final bool toggle;
 
   @override
   _WorkSpaceState createState() => _WorkSpaceState();
@@ -41,8 +46,8 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
         setState(() {});
       });
 
-    widthTextMenu = 112.0;
-    widthMenu = 240.0;
+    widthTextMenu = widget.toggle ? 112.0 : 0.0;
+    widthMenu = widget.toggle ? 240.0 : 64.0;
   }
 
   @override

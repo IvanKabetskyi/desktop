@@ -8,12 +8,14 @@ class RouteGenerator {
     Map<String, dynamic> args = settings.arguments;
 
     int index = args != null ? args['index'] : 0;
+    bool toggle = args != null ? args['toggle'] : true;
 
     PageRouteBuilder createRoute(Widget widget) {
       return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => WorkSpaceHoc(
                 child: widget,
                 index: index,
+                toggle: toggle,
               ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               child);

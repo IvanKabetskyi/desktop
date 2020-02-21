@@ -121,6 +121,7 @@ class _MenuState extends State<Menu> {
   }
 
   void handleLinkTo(String link, int setIndex) {
-    Navigator.pushNamed(context, link, arguments: {'index': setIndex});
+    Navigator.pushNamed(context, link,
+        arguments: {'index': setIndex, 'toggle': widget.widthMenu == 240.0});
   }
 }
