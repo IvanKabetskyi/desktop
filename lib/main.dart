@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:example_flutter/src/Router/route_generator.dart';
 import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
+import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
+import 'package:example_flutter/src/data/repositories/drivers_repositore.dart';
 import 'package:example_flutter/src/data/repositories/user_repositore.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
@@ -41,7 +43,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<AppBloc>(
           create: (BuildContext context) =>
               AppBloc(repository: new AppRepositoryImpl()),
-        )
+        ),
+        BlocProvider<DriversBloc>(
+          create: (BuildContext context) =>
+              DriversBloc(repository: new DriversRepositoryImpl()),
+        ),
       ],
       child: MaterialApp(
         onGenerateRoute: RouteGenerator.generateRoute,

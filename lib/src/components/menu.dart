@@ -2,11 +2,16 @@ import 'package:example_flutter/src/components/menuItem.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatefulWidget {
-  Menu({Key key, @required this.widthMenu, @required this.widthTextMenu})
+  Menu(
+      {Key key,
+      @required this.widthMenu,
+      @required this.widthTextMenu,
+      @required this.index})
       : super(key: key);
 
   final double widthMenu;
   final double widthTextMenu;
+  final int index;
 
   @override
   _MenuState createState() => _MenuState();
@@ -20,7 +25,7 @@ class _MenuState extends State<Menu> {
   void initState() {
     super.initState();
 
-    selectIndex = 0;
+    selectIndex = widget.index;
 
     _menu = [
       {
@@ -116,9 +121,6 @@ class _MenuState extends State<Menu> {
   }
 
   void handleLinkTo(String link, int setIndex) {
-    setState(() {
-      selectIndex = setIndex;
-    });
-    Navigator.pushNamed(context, link);
+    Navigator.pushNamed(context, link, arguments: {'index': setIndex});
   }
 }

@@ -1,12 +1,16 @@
-import 'package:example_flutter/src/Router/route_generator_work_space.dart';
+import 'package:example_flutter/src/bloc/drivers/drivers_state.dart';
 import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
 import 'package:example_flutter/src/components/menu.dart';
-import 'package:example_flutter/src/data/repositories/drivers_repositore.dart';
+import 'package:example_flutter/src/data/models/Drivers/drivers_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WorkSpaceHoc extends StatefulWidget {
-  WorkSpaceHoc({Key key}) : super(key: key);
+  WorkSpaceHoc({Key key, @required this.child, @required this.index})
+      : super(key: key);
+
+  final Widget child;
+  final int index;
 
   @override
   _WorkSpaceState createState() => _WorkSpaceState();
@@ -45,7 +49,10 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
     return Scaffold(
       body: Row(
         children: <Widget>[
-          Menu(widthMenu: widthMenu, widthTextMenu: widthTextMenu),
+          Menu(
+              widthMenu: widthMenu,
+              widthTextMenu: widthTextMenu,
+              index: widget.index),
           Expanded(
             child: Column(
               children: <Widget>[
@@ -92,19 +99,28 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
                   ),
                 ),
                 Flexible(
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider<DriversBloc>(
-                        create: (BuildContext context) => DriversBloc(
-                            repository: new DriversRepositoryImpl()),
-                      ),
-                    ],
-                    child: MaterialApp(
-                      onGenerateRoute: RouteGeneratorWorkSpace.generateRoute,
-                      debugShowCheckedModeBanner: false,
-                      initialRoute: '/drivers',
-                    ),
-                  ),
+                  child: Stack(children: <Widget>[
+                    widget.child,
+                    BlocBuilder<DriversBloc, DriversState>(
+                        builder: (context, state) {
+                      if (state is DriversLoadingState) {
+                        return Container(
+                          alignment: Alignment(-0.9, -0.9),
+                          child: FractionallySizedBox(
+                            widthFactor: 1.0,
+                            heightFactor: 1.0,
+                            child: Container(
+                              alignment: Alignment.center,
+                              color: Color.fromRGBO(0, 0, 0, 0.5),
+                              child: Text('Loading....'),
+                            ),
+                          ),
+                        );
+                      }
+
+                      return SizedBox();
+                    })
+                  ]),
                 )
               ],
             ),

@@ -1,16 +1,29 @@
+import 'package:example_flutter/src/Hoc/WorkSpaceHoc.dart';
+import 'package:example_flutter/src/screen/Drivers.dart';
 import 'package:example_flutter/src/screen/Login.dart';
-import 'package:example_flutter/src/screen/WorkSpaceHoc.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
+    Map<String, dynamic> args = settings.arguments;
 
-    print(args.toString());
+    int index = args != null ? args['index'] : 0;
+
+    PageRouteBuilder createRoute(Widget widget) {
+      return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => WorkSpaceHoc(
+                child: widget,
+                index: index,
+              ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              child);
+    }
 
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => WorkSpaceHoc());
+      case '/drivers':
+        return createRoute(DriversPage());
+      case '/test':
+        return createRoute(Text('test'));
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
       default:
