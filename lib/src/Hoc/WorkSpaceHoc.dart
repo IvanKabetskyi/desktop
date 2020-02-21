@@ -4,6 +4,7 @@ import 'package:example_flutter/src/components/menu.dart';
 import 'package:example_flutter/src/data/models/Drivers/drivers_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class WorkSpaceHoc extends StatefulWidget {
   WorkSpaceHoc({Key key, @required this.child, @required this.index})
@@ -110,10 +111,12 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
                             widthFactor: 1.0,
                             heightFactor: 1.0,
                             child: Container(
-                              alignment: Alignment.center,
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              child: Text('Loading....'),
-                            ),
+                                alignment: Alignment.center,
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                                child: SpinKitFadingCircle(
+                                  color: Colors.black,
+                                  size: 50.0,
+                                )),
                           ),
                         );
                       }
