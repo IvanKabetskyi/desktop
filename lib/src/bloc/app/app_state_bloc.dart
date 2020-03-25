@@ -28,7 +28,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
         yield AppLoadedState(appState: appState);
         yield appState;
-        Navigator.of(event.context).pushNamed('/drivers');
+        Navigator.of(event.context).pushNamed('/app');
       } catch (e) {
         yield AppErrorState(message: e.toString());
       }

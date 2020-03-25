@@ -6,12 +6,12 @@ class Menu extends StatefulWidget {
       {Key key,
       @required this.widthMenu,
       @required this.widthTextMenu,
-      @required this.index})
+      @required this.appNavigator})
       : super(key: key);
 
   final double widthMenu;
   final double widthTextMenu;
-  final int index;
+  final NavigatorObserver appNavigator;
 
   @override
   _MenuState createState() => _MenuState();
@@ -25,18 +25,18 @@ class _MenuState extends State<Menu> {
   void initState() {
     super.initState();
 
-    selectIndex = widget.index;
+    selectIndex = 0;
 
     _menu = [
       {
         'icon': Icons.directions_car,
         'title': 'DRIVERS',
-        'link': '/drivers',
+        'link': 'app/drivers',
       },
       {
         'icon': Icons.directions_car,
         'title': 'test',
-        'link': '/test',
+        'link': 'app/test',
       },
       {
         'icon': Icons.power_settings_new,
@@ -121,7 +121,14 @@ class _MenuState extends State<Menu> {
   }
 
   void handleLinkTo(String link, int setIndex) {
-    Navigator.pushNamed(context, link,
-        arguments: {'index': setIndex, 'toggle': widget.widthMenu == 240.0});
+    setState(() {
+      selectIndex = setIndex;
+    });
+
+    if(link != '/login'){
+      widget.appNavigator.navigator.pushNamed(link);
+    }else {
+      Navigator.of(context).pushReplacementNamed(link);
+    }
   }
 }
