@@ -1,6 +1,6 @@
-import 'package:example_flutter/src/data/models/Drivers/hired_by.dart';
-import 'package:example_flutter/src/data/models/Drivers/truck.dart';
 import 'package:example_flutter/src/lib/conver_to_camel_case.dart';
+import 'package:example_flutter/src/screen/Drivers/models/hired_by.dart';
+import 'package:example_flutter/src/screen/Drivers/models/truck.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'owner.dart';

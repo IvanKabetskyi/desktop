@@ -1,10 +1,11 @@
-import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
-import 'package:example_flutter/src/bloc/app/app_state_event.dart';
 import 'package:example_flutter/src/components/Button.dart';
 import 'package:example_flutter/src/components/CheckBox.dart';
 import 'package:example_flutter/src/components/InputContainer.dart';
+import 'package:example_flutter/src/redux/models/app_state.dart';
+import 'package:example_flutter/src/screen/Login/actions/login_acions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_redux/flutter_redux.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -17,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController email;
   TextEditingController password;
   bool checkBox;
-  AppBloc appBloc;
 
   @override
   void initState() {
@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
     email = new TextEditingController();
     password = new TextEditingController();
     checkBox = false;
-    appBloc = BlocProvider.of<AppBloc>(context);
   }
 
   @override
@@ -124,7 +123,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login() async {
-    appBloc.add(new FetchLogin(
-        email: email.text, password: password.text, context: context));
+    await StoreProvider.of<AppState>(context)
+        .dispatch(login(email.text, password.text));
+    Navigator.of(context).pushNamed('/app');
+    // appBloc.add(new FetchLogin(
+    //     email: email.text, password: password.text, context: context));
   }
 }

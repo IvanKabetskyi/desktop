@@ -8,7 +8,10 @@ part of 'drivers_state.dart';
 
 DriversState _$DriversStateFromJson(Map<String, dynamic> json) {
   return DriversState(
-    drivers: json['drivers'] as List,
+    drivers: (json['drivers'] as List)
+        ?.map((e) =>
+            e == null ? null : Driver.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 

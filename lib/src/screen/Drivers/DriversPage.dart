@@ -1,12 +1,13 @@
-import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
-import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
-import 'package:example_flutter/src/bloc/drivers/drivers_state_event.dart';
+import 'dart:convert';
+
 import 'package:example_flutter/src/components/Drivers/drivers_header.dart';
 import 'package:example_flutter/src/components/Drivers/drivers_list_item.dart';
-import 'package:example_flutter/src/data/models/Drivers/driver.dart';
-import 'package:example_flutter/src/data/models/Drivers/drivers_state.dart';
+import 'package:example_flutter/src/redux/models/app_state.dart';
+import 'package:example_flutter/src/screen/Drivers/actions/driver_acions.dart';
+import 'package:example_flutter/src/screen/Drivers/models/driver.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_redux/flutter_redux.dart';
 
 class DriversPage extends StatefulWidget {
   _DriversState createState() => _DriversState();
@@ -15,16 +16,12 @@ class DriversPage extends StatefulWidget {
 class _DriversState extends State<DriversPage> {
   int page;
   int perPage;
-  DriversBloc driversBloc;
-  AppBloc appBloc;
   @override
   void initState() {
     super.initState();
     page = 1;
     perPage = 50;
 
-    driversBloc = BlocProvider.of<DriversBloc>(context);
-    appBloc = BlocProvider.of<AppBloc>(context);
     getListDrivers();
   }
 
@@ -43,11 +40,16 @@ class _DriversState extends State<DriversPage> {
               EdgeInsets.only(top: 80.0, left: 35.0, right: 35.0, bottom: 20.0),
           children: <Widget>[
             HeaderDrivers(),
-            BlocBuilder<DriversBloc, DriversState>(
+            StoreConnector<AppState, AppState>(
+              converter: (store) {
+                print('converter ${json.encode(store.state.toJson())}');
+                return store.state;
+              },
               builder: (context, state) {
-                if (state is DriversState && state.drivers != null) {
+                print('encode state $state');
+                if (state.driversSate.drivers != null) {
                   return Column(
-                    children: state.drivers
+                    children: state.driversSate.drivers
                         .map((driver) => createDriverItem(driver))
                         .toList(),
                   );
@@ -56,6 +58,19 @@ class _DriversState extends State<DriversPage> {
                 return SizedBox();
               },
             ),
+            // BlocBuilder<DriversBloc, DriversState>(
+            //   builder: (context, state) {
+            //     if (state is DriversState && state.drivers != null) {
+            //       return Column(
+            //         children: state.drivers
+            //             .map((driver) => createDriverItem(driver))
+            //             .toList(),
+            //       );
+            //     }
+
+            //     return SizedBox();
+            //   },
+            // ),
           ],
         ),
       ),
@@ -90,7 +105,7 @@ class _DriversState extends State<DriversPage> {
   }
 
   void getListDrivers() async {
-    driversBloc.add(new GetDrivers(
-        page: page, perPage: perPage, accessToken: appBloc.state.accessToken));
+    print(StoreProvider.of<AppState>(context).state.userState.accessToken);
+    StoreProvider.of<AppState>(context).dispatch(setDrivers(page, perPage));
   }
 }

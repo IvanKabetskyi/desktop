@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:example_flutter/src/Router/route_generator.dart';
-import 'package:example_flutter/src/bloc/app/app_state_bloc.dart';
-import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
-import 'package:example_flutter/src/data/repositories/drivers_repositore.dart';
-import 'package:example_flutter/src/data/repositories/user_repositore.dart';
+import 'package:example_flutter/src/redux/index.dart';
+import 'package:example_flutter/src/redux/models/app_state.dart';
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
 // import 'package:flutter/gestures.dart';
@@ -13,8 +11,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 //color #3fc4ff
 
@@ -23,7 +23,8 @@ void main() async {
   Directory current = Directory.current;
   print(current.toString());
   Hive.init(current.toString());
-  runApp(new MyApp());
+  Store<AppState> store = getStore();
+  runApp(new MyApp(store: store));
 
   await Hive.openBox('myBox');
   var box = Hive.box('myBox');
@@ -36,19 +37,13 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final Store<AppState> store;
+  MyApp({this.store});
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AppBloc>(
-          create: (BuildContext context) =>
-              AppBloc(repository: new AppRepositoryImpl()),
-        ),
-        BlocProvider<DriversBloc>(
-          create: (BuildContext context) =>
-              DriversBloc(repository: new DriversRepositoryImpl()),
-        ),
-      ],
+    return StoreProvider<AppState>(
+      store: store,
       child: MaterialApp(
         onGenerateRoute: RouteGenerator.generateRoute,
         debugShowCheckedModeBanner: false,

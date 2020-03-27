@@ -1,5 +1,5 @@
 import 'package:example_flutter/src/Hoc/WorkSpaceHoc.dart';
-import 'package:example_flutter/src/screen/Login.dart';
+import 'package:example_flutter/src/screen/Login/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {

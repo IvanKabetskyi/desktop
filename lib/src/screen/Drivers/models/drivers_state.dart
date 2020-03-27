@@ -1,5 +1,5 @@
-import 'package:example_flutter/src/data/models/Drivers/driver.dart';
 import 'package:example_flutter/src/lib/conver_to_camel_case.dart';
+import 'package:example_flutter/src/screen/Drivers/models/driver.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'drivers_state.g.dart';

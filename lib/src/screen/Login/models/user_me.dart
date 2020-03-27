@@ -1,6 +1,6 @@
-import 'package:example_flutter/src/data/models/User/settings.dart';
-import 'package:example_flutter/src/data/models/User/user.dart';
 import 'package:example_flutter/src/lib/conver_to_camel_case.dart';
+import 'package:example_flutter/src/screen/Login/models/settings.dart';
+import 'package:example_flutter/src/screen/Login/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_me.g.dart';
