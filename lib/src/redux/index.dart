@@ -1,3 +1,4 @@
+import 'package:example_flutter/src/redux/reducer/sync_reducer.dart';
 import 'package:example_flutter/src/screen/Drivers/reducers/drivers_reducer.dart';
 import 'package:example_flutter/src/screen/Login/models/user_state.dart';
 import 'package:example_flutter/src/redux/models/app_state.dart';
@@ -10,6 +11,7 @@ Store<AppState> getStore() {
   final combined = combineReducers<AppState>([
     userReducer,
     driversReducer,
+    syncReducer,
   ]);
   final AppState _initialState =
       AppState(userState: UserState(), driversSate: DriversState());

@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:example_flutter/src/components/Drivers/drivers_header.dart';
 import 'package:example_flutter/src/components/Drivers/drivers_list_item.dart';
 import 'package:example_flutter/src/redux/models/app_state.dart';
 import 'package:example_flutter/src/screen/Drivers/actions/driver_acions.dart';
 import 'package:example_flutter/src/screen/Drivers/models/driver.dart';
+import 'package:example_flutter/src/screen/Drivers/models/drivers_state.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
@@ -22,7 +21,14 @@ class _DriversState extends State<DriversPage> {
     page = 1;
     perPage = 50;
 
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     getListDrivers();
+
   }
 
   @override
@@ -40,16 +46,12 @@ class _DriversState extends State<DriversPage> {
               EdgeInsets.only(top: 80.0, left: 35.0, right: 35.0, bottom: 20.0),
           children: <Widget>[
             HeaderDrivers(),
-            StoreConnector<AppState, AppState>(
-              converter: (store) {
-                print('converter ${json.encode(store.state.toJson())}');
-                return store.state;
-              },
+            StoreConnector<AppState, DriversState>(
+              converter: (store) => store.state.driversSate,
               builder: (context, state) {
-                print('encode state $state');
-                if (state.driversSate.drivers != null) {
+                if (state.drivers != null) {
                   return Column(
-                    children: state.driversSate.drivers
+                    children: state.drivers
                         .map((driver) => createDriverItem(driver))
                         .toList(),
                   );
@@ -58,19 +60,6 @@ class _DriversState extends State<DriversPage> {
                 return SizedBox();
               },
             ),
-            // BlocBuilder<DriversBloc, DriversState>(
-            //   builder: (context, state) {
-            //     if (state is DriversState && state.drivers != null) {
-            //       return Column(
-            //         children: state.drivers
-            //             .map((driver) => createDriverItem(driver))
-            //             .toList(),
-            //       );
-            //     }
-
-            //     return SizedBox();
-            //   },
-            // ),
           ],
         ),
       ),
@@ -105,7 +94,6 @@ class _DriversState extends State<DriversPage> {
   }
 
   void getListDrivers() async {
-    print(StoreProvider.of<AppState>(context).state.userState.accessToken);
     StoreProvider.of<AppState>(context).dispatch(setDrivers(page, perPage));
   }
 }

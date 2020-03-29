@@ -4,11 +4,6 @@ import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    Map<String, dynamic> args = settings.arguments;
-
-    print(args.toString());
-    print(settings.name);
-
     switch (settings.name) {
       case '/app':
         return MaterialPageRoute(builder: (_) => WorkSpaceHoc());

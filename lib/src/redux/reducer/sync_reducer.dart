@@ -1,10 +1,14 @@
 import 'package:example_flutter/src/redux/models/app_state.dart';
 
-AppState userReducer(AppState prevState, action) {
+AppState syncReducer(AppState prevState, action) {
   AppState state = prevState;
   switch (action.type) {
-    case 'SET_USER':
-      state.userState = action.payload['user'];
+    case 'START_SYNC':
+      state.syncLoad = true;
+      return state;
+
+    case 'STOP_SYNC':
+      state.syncLoad = false;
       return state;
 
     default:

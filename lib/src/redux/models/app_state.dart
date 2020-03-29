@@ -8,8 +8,9 @@ part 'app_state.g.dart';
 class AppState {
   UserState userState;
   DriversState driversSate;
+  bool syncLoad;
 
-  AppState({this.userState, this.driversSate});
+  AppState({this.userState, this.driversSate, this.syncLoad = false});
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);

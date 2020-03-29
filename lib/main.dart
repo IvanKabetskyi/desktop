@@ -21,7 +21,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 void main() async {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   Directory current = Directory.current;
-  print(current.toString());
   Hive.init(current.toString());
   Store<AppState> store = getStore();
   runApp(new MyApp(store: store));
