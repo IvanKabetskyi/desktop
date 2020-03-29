@@ -1,7 +1,7 @@
-import 'package:example_flutter/src/components/Drivers/drivers_header.dart';
-import 'package:example_flutter/src/components/Drivers/drivers_list_item.dart';
 import 'package:example_flutter/src/redux/models/app_state.dart';
 import 'package:example_flutter/src/screen/Drivers/actions/driver_acions.dart';
+import 'package:example_flutter/src/screen/Drivers/components/drivers_header.dart';
+import 'package:example_flutter/src/screen/Drivers/components/drivers_list_item.dart';
 import 'package:example_flutter/src/screen/Drivers/models/driver.dart';
 import 'package:example_flutter/src/screen/Drivers/models/drivers_state.dart';
 import 'package:flutter/material.dart';
