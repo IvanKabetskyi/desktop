@@ -29,7 +29,6 @@ class Api {
           headers: {HttpHeaders.authorizationHeader: 'Bearer $accessToken'});
       return response;
     } catch (error) {
-      print(error.toString());
       throw error;
     }
   }

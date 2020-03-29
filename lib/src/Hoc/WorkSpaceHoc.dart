@@ -1,11 +1,10 @@
-import 'package:example_flutter/src/bloc/drivers/drivers_state.dart';
-import 'package:example_flutter/src/bloc/drivers/drivers_state_bloc.dart';
+import 'package:example_flutter/src/Router/router_generator_workspace.dart';
 import 'package:example_flutter/src/components/menu.dart';
-import 'package:example_flutter/src/data/models/Drivers/drivers_state.dart';
-import 'package:example_flutter/src/screen/Drivers.dart';
+import 'package:example_flutter/src/redux/models/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 
 class WorkSpaceHoc extends StatefulWidget {
   @override
@@ -106,45 +105,29 @@ class _WorkSpaceState extends State<WorkSpaceHoc>
                     Navigator(
                       observers: [appNavigator],
                       initialRoute: 'app/drivers',
-                      onGenerateRoute: (RouteSettings settings) {
-                        print('work space hoc ${settings.name}');
-                        switch (settings.name) {
-                          case 'app/drivers':
-                            return PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) => DriversPage(),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                                child);
-                          case 'app/test':
-                            return PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) => Text('test'),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                                child);
-                          default:
-                            throw Exception('Innitial route: ${settings.name}');
-                        }
-                      },
+                      onGenerateRoute: RouteGeneratorWorkSpace.generateRoute,
                     ),
-                    // widget.child,
-                    BlocBuilder<DriversBloc, DriversState>(
-                        builder: (context, state) {
-                      if (state is DriversLoadingState) {
-                        return Container(
-                          alignment: Alignment(-0.9, -0.9),
-                          child: FractionallySizedBox(
-                            widthFactor: 1.0,
-                            heightFactor: 1.0,
-                            child: Container(
-                                alignment: Alignment.center,
-                                color: Color.fromRGBO(0, 0, 0, 0.5),
-                                child: SpinKitFadingCircle(
-                                  color: Colors.black,
-                                  size: 50.0,
-                                )),
-                          ),
-                        );
-                      }
+                    StoreConnector<AppState, bool>(
+                      converter: (store) => store.state.syncLoad,
+                      builder: (context, state) {
+                        if (state) {
+                          return Container(
+                            alignment: Alignment(-0.9, -0.9),
+                            child: FractionallySizedBox(
+                              widthFactor: 1.0,
+                              heightFactor: 1.0,
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  color: Color.fromRGBO(0, 0, 0, 0.5),
+                                  child: SpinKitFadingCircle(
+                                    color: Colors.black,
+                                    size: 50.0,
+                                  )),
+                            ),
+                          );
+                        }
 
-                      return SizedBox();
+                        return SizedBox();
                     })
                   ]),
                 )
